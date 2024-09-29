@@ -1,63 +1,22 @@
-function job(state) {
-  return new Promise(function(resolve, reject) {
-      if (state) {
-          resolve('success');
-      } else {
-          reject('error');
-      }
+function downloadTexture(delay) {
+  return new Promise((resolve, reject) => {
+    if (delay === 2000) {
+      reject("Not good number");
+    } else {
+      setTimeout(() => {
+        console.log(`Downloaded with delay ${delay}`);
+        resolve(`Done: ${delay}`);
+      }, delay)
+    }
   });
 }
 
-let promise = job(true);
+const promise = Promise.all([downloadTexture(1000), downloadTexture(2000), downloadTexture(3000)]);
 
-promise
-
-.then(function(data) {
-  console.log(data);
-
-  return job(true);
+promise.then((data) => {
+  data.forEach((text) => {
+    console.log(text);
+  })
+}).catch((error) => {
+  console.log(error)
 })
-
-.then(function(data) {
-  if (data !== 'victory') {
-      throw 'Defeat';
-  }
-
-  return job(true);
-})
-
-.then(function(data) {
-  console.log(data);
-})
-
-.catch(function(error) {
-  console.log(error);
-
-  return job(false);
-})
-
-.then(function(data) {
-  console.log(data);
-
-  return job(true);
-})
-
-.catch(function(error) {
-  console.log(error);
-
-  return 'Error caught';
-})
-
-.then(function(data) {
-  console.log(data);
-
-  return new Error('test');
-})
-
-.then(function(data) {
-  console.log('Success:', data.message);
-})
-
-.catch(function(data) {
-  console.log('Error:', data.message);
-});
