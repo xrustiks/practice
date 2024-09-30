@@ -1060,6 +1060,7 @@ promise
   });
 */
 
+/*
 const extract = async(address) {
   try {
     const response = await fetch(address);
@@ -1070,3 +1071,11 @@ const extract = async(address) {
 }
 
 extract('https://learn.javascript.ru/promise-chaining');
+*/
+
+const generateInsult = async (lang = "ru", type = "default") => {
+  const url = `https://evilinsult.com/api/generate_insult.php?lang=${lang}&type=${type}`;
+  const response = await fetch(url);
+  const data = await response.json();
+  return data.insult;
+};
